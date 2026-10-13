@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.hnzj.dao.UserDao">	
+
+	<!-- 增删改查顺序 -->
+	<!-- public void save(User user); -->
+	<insert id="save" parameterType="cn.edu.hnzj.pojo.User">
+		insert into user(username,password,email,role) values(#{username},#{password},#{email},#{role} )
+	</insert>
+	
+	<!-- public int deleteUserByName(String username); -->
+	<delete id="deleteUserByName" parameterType="cn.edu.hnzj.pojo.User">
+		delete from user where username=#{username}
+	</delete>
+	
+	<!-- public  int updateUserById(int id); -->
+	<update id="updateUserById" parameterType="cn.edu.hnzj.pojo.User">
+		update user set username=#{username}
+		where id=#{id}
+	</update>
+	
+	<!-- public  int updateUserPassword(User user); -->
+	<update id="updateUserPassword" parameterType="cn.edu.hnzj.pojo.User">
+		update user set password=#{password} 
+		where username=#{username} and email=#{email}
+	</update>
+	
+	
+    <!-- public User findUserByname(); -->
+	<select id="findUserByname" resultType="cn.edu.hnzj.pojo.User">
+		select * from user where username=#{username}
+	</select>
+	
+	<!-- public List<User> findAllUser() -->
+	<select id="findAllUser" resultType="cn.edu.hnzj.pojo.User">
+		select * from user
+	</select>
+</mapper>

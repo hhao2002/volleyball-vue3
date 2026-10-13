@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.hnzj.dao.TeamDao">
+	<!--通过id属性 修改 volleyball.team表 中的队伍信息 public int updateTeamByid(Team team); -->
+	<update id="updateTeamByName" parameterType="team">
+		update team
+		<set>
+			<if test="matchId != 0">matchs_id=#{matchId},</if>
+			<if test="coach != null &amp;&amp; coach != ''">coach=#{coach}</if>
+		</set>
+		where name=#{name}
+	</update>
+
+	<resultMap type="team" id="teammembersMap">
+		<id column="t_id" property="id" />
+		<result column="matchs_id" property="matchId" />
+		<result column="t_name" property="name" />
+		<result column="coach" property="coach" />
+		<collection property="members" ofType="member">
+			<id column="m_id" property="id" />
+			<result column="team_id" property="teamId" />
+			<result column="m_name" property="name" />
+			<result column="position" property="position" />
+		</collection>
+	</resultMap>
+
+	<!-- 通过比赛id属性 查询 volleyball.team表 中的队伍信息 public Team selectTeamById(int id); -->
+	<select id="selectTeamById" parameterType="int"
+		resultMap="teammembersMap">
+		select
+		t.id t_id,
+		matchs_id, t.name t_name, coach,
+		m.id m_id,
+		team_id, m.name m_name, position
+		from team t join
+		`member` m on t.id =
+		team_id
+		where t.id=#{id}
+	</select>
+
+	<!-- 通过比赛id属性 查询 volleyball.team表 中的队伍信息 public Team selectTeamById(int id); -->
+	<select id="selectTeamByMatchId" parameterType="int"
+		resultMap="teammembersMap">
+		select
+		t.id t_id,
+		matchs_id, t.name t_name, coach,
+		m.id m_id,
+		team_id, m.name m_name, position
+		from team t join
+		`member` m on t.id =
+		team_id
+		where matchs_id=#{matchId}
+	</select>
+
+	<resultMap id="teamMap" type="team">
+		<id column="id" property="id" />
+		<result column="matchs_id" property="matchId" />
+		<result column="name" property="name" />
+		<result column="coach" property="coach" />
+	</resultMap>
+
+	<!-- 通过id属性 查询 volleyball.team表 中的队伍信息 public List<Team> selectAllTeam(); -->
+	<select id="selectTeamAll" resultMap="teamMap">
+		select
+		id, matchs_id, name,
+		coach
+		from team
+		where id!=1
+	</select>
+
+	<!-- 通过Team对象 向 volleyball.team表 添加一个队伍 public int insertTeamByObject(Team 
+		team); 字段名：id matchs_id name coach -->
+	<insert id="insertTeamByObject" parameterType="team">
+		insert into
+		team(matchs_id,name,coach) values(#{matchs_id},#{name},#{coach})
+	</insert>
+
+	<!--通过id属性 向 volleyball.team表 删除一个队伍 public int deleteTeamById(int id); -->
+	<delete id="deleteTeamById" parameterType="team">
+		delete
+		id,matchs_id,name,coach from team where id=#{id}
+	</delete>
+
+	<!-- 获得所有team的名称 public List<String> selectAllTeamName(); -->
+	<select id="selectAllTeamName" resultType="team">
+		select name from team;
+	</select>
+
+	<!-- 通过队伍名称修改比赛id public boolean modifyTeamName(Match match); -->
+	<update id="modifyTeamName" parameterType="team">
+		update team set id =
+		#{match.id} where name in(#{match.teams.name})
+	</update>
+	
+	<!-- 更改队伍的参赛id为1 -->
+	<update id="updateMatchIdOfTeamToOneByMatchId">
+		update team set matchs_id=1 where matchs_id=#{matchId}
+	</update>
+</mapper>

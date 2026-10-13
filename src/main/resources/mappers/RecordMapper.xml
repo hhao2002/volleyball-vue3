@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.hnzj.dao.RecordDao">
+	<!-- record表字段 -->
+	<sql id="columns">
+		id,session,inning,matchs_id,member_id,team_id
+		<if test="scoreTime != null &amp;&amp; !scoreTime.isEmpty()">,score_time</if>
+	</sql>
+
+	<resultMap id="recordMap" type="record">
+		<id property="id" column="id" />
+		<result property="session" column="session" />
+		<result property="inning" column="inning" />
+		<result property="matchId" column="matchs_id" />
+		<result property="memberId" column="member_id" />
+		<result property="teamId" column="team_id" />
+		<result property="scoreTime" column="score_time" />
+	</resultMap>
+
+	<!-- 通过比赛 id 获取所有记录 -->
+	<select id="selectRecordsByMatchId" resultMap="recordMap">
+		select *
+		from record
+		where
+		matchs_id = #{matchId}
+	</select>
+
+	<!-- 通过比赛 id 场数 局数 获取某次记录得分 -->
+	<select id="selectRecordByMatIdSinIn" resultMap="recordMap">
+		select *
+		from record
+		where
+		matchs_id = #{matchId}
+		and session = #{session}
+		and inning = #{inning}
+	</select>
+
+	<!-- 查询某场比赛的最后一条记录 -->
+	<select id="selectLastRecordByMatchId" resultMap="recordMap">
+		select
+		id,session,inning,matchs_id,member_id,team_id,score_time
+		from record
+		where
+		matchs_id = #{matchId}
+		order by id desc limit 1
+	</select>
+
+	<!-- 把对象添加到表内 -->
+	<insert id="insertRecordByObject" keyProperty="id"
+		useGeneratedKeys="true">
+		insert into record
+		(
+		<include refid="columns" />
+		)
+		values(#{id},#{session},#{inning},#{matchId},#{memberId},#{teamId}
+		<if test="scoreTime != null &amp;&amp; !scoreTime.isEmpty()">,#{scoreTime}</if>
+		)
+	</insert>
+
+	<!-- 修改得分者 -->
+	<update id="updateRecordByMatIdSinIn">
+		update record
+		set member_id = #{memberId},
+		team_id = #{teamId}
+		where
+		matchs_id = #{matchId}
+		and session = #{session}
+		and inning = #{inning}
+	</update>
+
+	<!-- 通过id删除一条记录 -->
+	<delete id="deleteRecordById">
+		delete from record
+		where id = #{id}
+	</delete>
+
+	<!-- 通过比赛id删除该比赛的所有记录 -->
+	<delete id="deleteRecordByMatchId">
+		delete from record
+		where matchs_id = #{matchId}
+	</delete>
+</mapper>

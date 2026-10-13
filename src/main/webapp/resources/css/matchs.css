@@ -1,0 +1,136 @@
+#matchs {
+	position: absolute;
+	left: 12.5vw;
+	top: 10vh;
+	width: 80vw;
+}
+
+.match {
+	float: left;
+	margin-top: 1vw;
+	margin-bottom: 1vw;
+	margin-right: 5vw;
+	width: 14vw;
+	height: 10vw;
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.new,
+.exist {
+	margin-left: 0.5vw;
+}
+
+.new {
+	text-align: center;
+	color: #FAEBD7;
+	font-size: 3vw;
+	border: #A9A9A9 dashed 0.5vw;
+}
+
+.exist {
+	border: #A9A9A9 solid 0.5vw;
+}
+
+.add-match {
+	font-size: 6vw;
+	font-weight: bolder;
+	color: white;
+}
+
+.topic {
+	font-size: 1.5vw;
+	color: antiquewhite;
+}
+
+.match-name {
+	color: bisque;
+	font-size: 1.9vw;
+	margin-bottom: 1vw;
+}
+
+p {
+	text-align: center;
+	font-size: 1.5vw;
+	color: antiquewhite;
+	height: 2.3vw;
+	overflow: hidden;
+}
+
+#add-match-form {
+	position: fixed;
+	left: 20vw;
+	top: 15vh;
+	width: 60vw;
+	height: 35vw;
+	border-radius: 2vw;
+	background: linear-gradient(145deg, #cacaca, #f0f0f0);
+	box-shadow: 1vw 1vw 2vw #afafaf, -1vw -1vw 2vw #ffffff;
+	z-index: 2;
+}
+
+#add-match-form table {
+	position: relative;
+	left: 5vw;
+	top: 2vw;
+}
+
+#add-match-form p {
+	font-size: 2vw;
+	text-align: right;
+	color: sienna;
+	width: 20vw;
+}
+
+#add-match-form select {
+	font-size: 1.5vw;
+	text-align: center;
+}
+
+#add-match-form input {
+	font-size: 2.5vw;
+	text-align: center;
+	width: 20vw;
+}
+
+#add-match-form #submit {
+	position: relative;
+	left: 13vw;
+	top: 2vw;
+}
+
+#teams {
+	font-size: 2.5vw;
+}
+
+#team1 {
+	text-align: right;
+}
+
+.button {
+	position: absolute;
+	font-size: 3vw;
+	color: crimson;
+}
+
+#add-match-form span {
+	left: 57vw;
+	top: -1vw;
+}
+
+#add-match-form .add-team {
+	font-size: 2vw;
+	width: 8vw;
+	color: chocolate;
+}
+
+li:nth-child(2)>a {
+	width: 70%;
+	font-size: 32px;
+	background-color: rgba(109, 76, 61, 0.8);
+}
+
+.drop-match {
+	background-color: #F0EDF3;
+	z-index: 1;
+	border-bottom-right-radius: 1vw;
+}
