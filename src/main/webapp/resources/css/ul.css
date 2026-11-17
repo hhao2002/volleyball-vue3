@@ -1,0 +1,125 @@
+* {
+	margin: 0px;
+	padding: 0px;
+	user-select: none;
+}
+
+.ul-a {
+	z-index: 1;
+	width: 40%;
+	border: 1px solid #bbb;
+	border-top: none;
+	font-size: 24px;
+	font-family: "楷体";
+	font-style: italic;
+	-webkit-text-stroke: 1px #F39814;
+	-webkit-text-fill-color: white;
+	border-bottom-left-radius: 25px;
+	border-bottom-right-radius: 5px;
+	background-color: rgba(109, 76, 61, 0.3);
+}
+
+.longa {
+	border-bottom-right-radius: 10px;
+	border-right: 2px solid #bbb;
+}
+
+ul {
+	width: 80%;
+	list-style-type: none;
+	position: fixed;
+	right: -8%;
+	top: 0;
+}
+
+li {
+	text-align: center;
+	width: 10%;
+	display: inline;
+	float: left;
+}
+
+li:last-child {
+	border-bottom: none;
+}
+
+li .ul-a {
+	display: block;
+	padding-top: 16px;
+	padding-bottom: 8px;
+	padding-right: 4px;
+	text-decoration: none;
+}
+
+li .ul-a.active {
+	background-color: #00FF00;
+	transform: scale(1, 1.5);
+	color: white;
+}
+
+
+/* 鼠标移动到选项上修改背景颜色 */
+
+li .ul-a:hover {
+	background-color: rgba(109, 76, 61, 0.7);
+	opacity: 0.8;
+	padding-top: 72px;
+	border-bottom-right-radius: 20px;
+	-webkit-text-stroke: 1px white;
+	-webkit-text-fill-color: #F39814;
+	animation: appear 0.5s linear;
+	animation: ul 0.2s linear;
+}
+
+body {
+	background-image: url(../img/Capture.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-attachment: fixed;
+	animation: appear 1s linear;
+	opacity: 1;
+}
+
+
+/*定义一个动画效果*/
+
+@keyframes appear {
+	/*开始的状态*/
+	from {
+		/*设置透明度*/
+		opacity: 0;
+	}
+	/*结束时状态*/
+	to {
+		/*设置透明度*/
+		opacity: 0.8;
+	}
+}
+
+
+/*定义一个动画效果*/
+
+@keyframes ul {
+	/*开始的状态*/
+	from {
+		padding-top: 16px;
+		border-bottom-right-radius: 5px;
+	}
+	/*结束时状态*/
+	to {
+		padding-top: 72px;
+		border-bottom-right-radius: 20px;
+	}
+}
+
+
+/*按钮效果*/
+
+.button:hover {
+	cursor: pointer;
+	transform: scale(1.2, 1.2)
+}
+
+.button:active {
+	transform: scale(1.5, 1.5)
+}

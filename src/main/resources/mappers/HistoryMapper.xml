@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.hnzj.dao.HistoryDao">
+	<!-- history表字段 -->
+	<sql id="columns">
+		id, matchs_id, user_id, name, role
+	</sql>
+	<!-- history表字段 -->
+	<sql id="propertis">
+		#{id}, #{matchsId}, #{userId}, #{name}, #{role}
+		<if test="time != null &amp;&amp; !time.isEmpty()">,#{time}</if>
+	</sql>
+
+	<!-- 传入History对象 向 volleyball.history表 添加一条记录 insertHistoryByObject(History 
+		history) -->
+	<insert id="insertHistoryByObject" keyProperty="id"
+		useGeneratedKeys="true">
+		insert into history
+		(
+		<include refid="columns" />
+		<if test="time != null &amp;&amp; !time.isEmpty()">,time</if>
+		)
+		values(
+		<include refid="propertis" />
+		)
+	</insert>
+
+	<!-- 传入id 向volleyball.history 删除一条历史 deleteHistoryById(int id) -->
+	<delete id="deleteHistoryById">
+		delete from history
+		where id = #{id}
+	</delete>
+
+	<!-- history表与History类结果映射 -->
+	<resultMap id="historyMap" type="history">
+		<id property="id" column="id" />
+		<result property="matchsId" column="matchs_id" />
+		<result property="userId" column="user_id" />
+		<result property="name" column="name" />
+		<result property="role" column="role" />
+		<result property="time" column="time" />
+	</resultMap>
+
+	<!-- 传入id 向 volleyball.history 表 查询一条history对象 selectHistoryById(int id) -->
+	<select id="selectHistoryById" resultMap="historyMap">
+		select
+		<include refid="columns" />
+		,time
+		from history
+		where id = #{id}
+	</select>
+
+	<!-- 传入比赛id 向 volleyball.history表 查询该比赛的所有history对象 selectHistoryByMatchsId(int 
+		matchsId) -->
+	<select id="selectHistoryByMatchsId" resultMap="historyMap">
+		select
+		<include refid="columns" />
+		,time
+		from history
+		where matchs_id = #{matchsId}
+	</select>
+
+	<!-- 传入比赛id 向 volleyball.history表 查询该用户的所有history对象 selectHistoryByMatchsId(int 
+		userId) -->
+	<select id="selectHistoryByUserId" resultMap="historyMap">
+		select
+		<include refid="columns" />
+		,time
+		from history
+		where user_id = #{userId}
+	</select>
+
+	<!-- 向 volleyball.history表 查询所有的history对象 selectHistoryAll() -->
+	<select id="selectHistoryAll" resultMap="historyMap">
+		select
+		<include refid="columns" />
+		,time
+		from history
+	</select>
+</mapper>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.hnzj.dao.ApplicationDao">
+	<!-- application表字段 -->
+	<sql id="columns">
+		id, ap_type_id, ap_user_id, deal_user_id,
+		state,ap_user_name,deal_user_name
+	</sql>
+	<!-- application表字段 -->
+	<sql id="propertis">
+		#{id}, #{apTypeId}, #{apUserId},
+		#{dealUserId},#{state},#{apUserName},#{dealUserName}
+	</sql>
+
+	<!-- 传入Application对象 向 volleyball.application表 添加一条记录 insertApplicationByObject(Application 
+		application) -->
+	<insert id="insertApplicationByObject" keyProperty="id"
+		useGeneratedKeys="true">
+		insert into application
+		(
+		<include refid="columns" />
+		<if test="time != null &amp;&amp; !time.isEmpty()">,#{time}</if>
+		)
+		values(
+		<include refid="propertis" />
+		<if test="time != null &amp;&amp; !time.isEmpty()">,#{time}</if>
+		)
+	</insert>
+
+	<!-- 传入id 向volleyball.application 删除一条记录 deleteApplicationById(int id) -->
+	<delete id="deleteApplicationById">
+		delete from application
+		where id = #{id}
+	</delete>
+
+	<!-- 传入Application对象 向 volleyball.application表 通过id更新一条记录 updateApplicationByObject(Application 
+		application) -->
+	<update id="updateApplicationByObject"
+		parameterType="application">
+		update application
+		<set>
+			<if test="apTypeId != null">ap_type_id=#{apTypeId},</if>
+			<if test="apUserId != null">ap_user_id=#{apUserId},</if>
+			<if test="dealUserId != null">deal_user_id=#{dealUserId},</if>
+			<if test="apUserName != null">ap_user_name=#{apUserName},</if>
+			<if test="dealUserName != null">deal_user_name=#{dealUserName},</if>
+			<if test="state != null &amp;&amp; !state.isEmpty()">state=#{state},</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<!-- application表与Application类结果映射 -->
+	<resultMap id="applicationMap" type="application">
+		<id property="id" column="id" />
+		<result property="apTypeId" column="ap_type_id" />
+		<result property="apUserId" column="ap_user_id" />
+		<result property="apUserName" column="ap_user_name" />
+		<result property="dealUserId" column="deal_user_id" />
+		<result property="dealUserName" column="deal_user_name" />
+		<result property="time" column="time" />
+		<result property="state" column="state" />
+		<association property="apType" javaType="apType">
+			<id property="id" column="ty_id" />
+			<result property="description" column="description" />
+		</association>
+	</resultMap>
+
+	<!-- 传入id 向 volleyball.application 表 查询一条记录 selectApplicationById(int id) -->
+	<select id="selectApplicationById" resultMap="applicationMap">
+		select
+		ap.*, ty.*
+		from application ap join ap_type ty
+		on ty.id=ap_type_id
+		where ap.id =
+		#{id}
+	</select>
+
+	<!-- 传入userid 向 volleyball.application 表 查询所有记录 selectApplicationByApUserId(int 
+		userid) -->
+	<select id="selectApplicationByApUserId"
+		resultMap="applicationMap">
+		select
+		ap.*, ty.id
+		ty_id, ty.description
+		from application ap
+		join ap_type ty
+		on
+		ap_type_id=ty.id
+		where
+		ap.ap_user_id = #{apUserId}
+		order by time desc
+	</select>
+
+	<!-- 向 volleyball.application表 查询所有的得分 selectApplicationAll() -->
+	<select id="selectApplicationAll" resultMap="applicationMap">
+		select
+		ap.*, ty.id
+		ty_id, ty.description
+		from application ap join ap_type ty
+		on
+		ap_type_id=ty.id
+		order by time desc
+	</select>
+</mapper>

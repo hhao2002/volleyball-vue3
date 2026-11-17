@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.hnzj.dao.MatchDao">
+	<!-- matchs表字段 -->
+	<sql id="columns">
+		id,name,rules,start_time,end_time,sponsor,state,scorer_id
+	</sql>
+
+	<!-- 插入 matchs表字段 -->
+	<sql id="insertColumns">
+		id,name,rules,scorer_id
+		<if test="startTime != null &amp;&amp; !startTime.isEmpty()">,start_time</if>
+		,end_time,sponsor
+		<if test="state != null &amp;&amp; !state.isEmpty()">,state</if>
+	</sql>
+
+	<!-- 把对象添加到表内 -->
+	<insert id="insertMatchByObject" keyProperty="id"
+		useGeneratedKeys="true">
+		insert into matchs
+		(
+		<include refid="insertColumns" />
+		)
+		values(#{id},#{name},#{rules},scorer_id
+		<if test="startTime != null &amp;&amp; !startTime.isEmpty()">,#{startTime}</if>
+		,#{endTime},#{sponsor}
+		<if test="state != null &amp;&amp; !state.isEmpty()">,#{state}</if>
+		)
+	</insert>
+
+	<!-- 通过id删除一条记录 -->
+	<delete id="deleteMatchById">
+		delete from matchs
+		where id = #{id}
+	</delete>
+
+	<resultMap id="matchMap" type="match">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="rules" column="rules" />
+		<result property="startTime" column="start_time" />
+		<result property="endTime" column="end_time" />
+		<result property="sponsor" column="sponsor" />
+		<result property="state" column="state" />
+		<result property="scorer_id" column="scorerId" />
+	</resultMap>
+	<!-- 通过id查询比赛对象 -->
+	<select id="selectMatchById" resultMap="matchMap">
+		select
+		<include refid="columns" />
+		from matchs
+		where id = #{id}
+	</select>
+	<!-- 查询所有的比赛 -->
+	<select id="selectMatchAll" resultMap="matchMap">
+		select
+		<include refid="columns" />
+		from matchs
+		where id != 1
+	</select>
+	
+	<!-- 获取一个比赛的所有队员id -->
+	<select id="getMembersBymatchId" resultType="int">
+		select id from `member` where team_id in(select id from team where matchs_id =#{matchId})
+	</select>
+	
+	<!-- 更改比赛状态 -->
+	<update id="updateMatchStateById">
+		update matchs set state=#{state} where id=#{id}
+	</update>
+</mapper>

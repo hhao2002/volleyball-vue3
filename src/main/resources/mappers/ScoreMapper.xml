@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.hnzj.dao.ScoreDao">
+	<!-- score表字段 -->
+	<sql id="columns">
+		id, matchs_id, team_id, d_score, x_score
+	</sql>
+	<!-- score表字段 -->
+	<sql id="propertis">
+		#{id}, #{matchsId}, #{teamId}, #{dScore}, #{xScore}
+	</sql>
+
+	<!-- 传入Score对象 向 volleyball.score表 添加一条记录 insertScoreByObject(Score score) -->
+	<insert id="insertScoreByObject" keyProperty="id"
+		useGeneratedKeys="true">
+		insert into score
+		(
+		<include refid="columns" />
+		)
+		values(
+		<include refid="propertis" />
+		)
+	</insert>
+
+	<!-- 传入id 向volleyball.score 删除一条记录 deleteScoreById(int id) -->
+	<delete id="deleteScoreById">
+		delete from score
+		where id = #{id}
+	</delete>
+
+	<!-- 传入比赛id 向volleyball.score 删除两条记录 deleteScoreByMatchsId(int matchsId) -->
+	<delete id="deleteScoreByMatchsId">
+		delete from score
+		where matchs_id = #{matchsId}
+	</delete>
+
+	<!-- 传入Score对象 向 volleyball.score表 通过id更新一条记录 updateScoreByObject(Score 
+		score) -->
+	<update id="updateScoreByObject" parameterType="score">
+		update score
+		<set>
+			<if test="matchsId != null">matchs_id=#{matchsId},</if>
+			<if test="teamId != null">team_id=#{teamId},</if>
+			<if test="dScore >= 0">d_score=#{dScore},</if>
+			<if test="xScore >= 0">x_score=#{xScore},</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<!-- 传入Score对象 向 volleyball.score表 通过比赛id和队伍id更新得分 updateScoreByMIdTId(Score 
+		score) 不可缺失set关键字 -->
+	<update id="updateScoreByMIdTId" parameterType="score">
+		update score
+		<set>
+			matchs_id=#{matchsId},
+			<if test="dScore >= 0">d_score=#{dScore},</if>
+			<if test="xScore >= 0">x_score=#{xScore},</if>
+		</set>
+		where
+		matchs_id=#{matchsId}
+		and team_id=#{teamId}
+	</update>
+
+	<!-- score表与Score类结果映射 -->
+	<resultMap id="scoreMap" type="score">
+		<id property="id" column="id" />
+		<result property="matchsId" column="matchs_id" />
+		<result property="teamId" column="team_id" />
+		<result property="dScore" column="d_score" />
+		<result property="xScore" column="x_score" />
+	</resultMap>
+
+	<!-- 传入id 向 volleyball.score 表 查询一条记录 selectScoreById(int id) -->
+	<select id="selectScoreById" resultMap="scoreMap">
+		select
+		<include refid="columns" />
+		from score
+		where id = #{id}
+	</select>
+
+	<!-- 传入比赛id 向 volleyball.score表 查询两队伍的得分 selectScoreByMatchsId(int matchsId) -->
+	<select id="selectScoreByMatchsId" resultMap="scoreMap">
+		select
+		<include refid="columns" />
+		from score
+		where matchs_id = #{matchsId}
+	</select>
+
+	<!-- 向 volleyball.score表 查询所有的得分 selectScoreAll() -->
+	<select id="selectScoreAll" resultMap="scoreMap">
+		select
+		<include refid="columns" />
+		from score
+	</select>
+
+	<!-- 通过比赛id删除两队伍的得分 -->
+	<delete id="deleteScoreByMatchsIdForApi">
+		delete from score where matchs_id = #{matchsId}
+	</delete>
+</mapper>

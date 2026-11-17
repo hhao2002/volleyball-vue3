@@ -1,0 +1,5 @@
+# 复制本文件为 db.properties 并填写本地 MySQL 密码后启动后端
+jdbc.driver=com.mysql.cj.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:3306/volleyball?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+jdbc.username=root
+jdbc.password=your_password_here

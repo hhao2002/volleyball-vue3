@@ -1,0 +1,24 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- 注解驱动 -->
+	<mvc:annotation-driven />
+	<!--包扫描 -->
+	<context:component-scan
+		base-package="cn.edu.hnzj.controller" />
+	<!-- 视图解析器 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/pages/" /><!-- 配置jsp路径的前缀 -->
+		<property name="suffix" value=".jsp" /><!-- 配置jsp路径的后缀 -->
+	</bean>
+	<!-- 找不到请求时，由默认的处理器处理（Tomcat） -->
+	<mvc:default-servlet-handler/>
+</beans>

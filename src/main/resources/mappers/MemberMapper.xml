@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.hnzj.dao.MemberDao">
+	<!-- members表字段 -->
+	<sql id="columns">
+		id,team_id,name,position
+	</sql>
+
+	<!-- 把对象添加到表内 -->
+	<insert id="insertMemberByObject" keyProperty="id"
+		useGeneratedKeys="true">
+		insert into `member`
+		(
+		<include refid="columns" />
+		)
+		values(#{id},#{teamId},#{name},#{position})
+	</insert>
+
+	<!-- 通过id删除一条记录 -->
+	<delete id="deleteMemberById">
+		delete from `member`
+		where id = #{id}
+	</delete>
+
+	<update id="updateMemberById" parameterType="member">
+		update `member`
+		<set>
+			<if test="teamId != 0">team_id=#{teamId},</if>
+			<if test="name != null &amp;&amp; name != ''">name=#{name}</if>
+			<if test="position != null &amp;&amp; position != ''">position=#{position}</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<resultMap id="memberMap" type="member">
+		<id property="id" column="id" />
+		<result property="teamId" column="team_id" />
+		<result property="name" column="name" />
+		<result property="position" column="position" />
+	</resultMap>
+
+	<!-- 查询所有的队员 -->
+	<select id="selectMemberAll" resultMap="memberMap">
+		select
+		<include refid="columns" />
+		from `member`
+	</select>
+
+	<!-- 通过id查询的队员 -->
+	<select id="selectMemberById" resultMap="memberMap">
+		select
+		<include refid="columns" />
+		from `member`
+		where id = #{id}
+	</select>
+
+	<!-- 根据队员id和比赛id查询获得分数的次数，记录为总分 -->
+	<select id="selectScoreByMemberAndMatch" resultType="int">
+		select
+		COUNT(*) from record where member_id=#{memberId} and
+		matchs_id=#{matchId}
+	</select>
+	<!-- 根据队员id和比赛id查询得分记录的id以计算连续得分次数 -->
+	<select id="getScoreIdByMemberAndMatch" resultType="int">
+		select id
+		from record where member_id=#{memberId} and matchs_id=#{matchId}
+	</select>
+</mapper>
