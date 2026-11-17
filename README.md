@@ -1,4 +1,4 @@
-# 排球计分系统（volleyball-scoring-system）
+# 排球计分系统（volleyball-vue3）
 
 基于 SSM（SpringMVC + Spring + MyBatis）的排球比赛计分系统，前端已由 JSP 逐步迁移为 Vue 3 单页应用。
 
