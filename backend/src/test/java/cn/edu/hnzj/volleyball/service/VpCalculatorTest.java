@@ -60,7 +60,8 @@ class VpCalculatorTest {
         List<Vp> vps = calculator.calculate(left(), right(), events, 1L, 1L);
         assertEquals("B", find(vps, Vp.MVP).getMemberName());
         assertEquals(2, find(vps, Vp.MVP).getPoints());
-        assertNull(find(vps, Vp.SVP), "失利队伍无人得分时不应产生 SVP");
+        assertNotNull(find(vps, Vp.SVP), "失利队伍即使无人得分也必须产生 SVP");
+        assertEquals(0, find(vps, Vp.SVP).getPoints());
     }
 
     @Test

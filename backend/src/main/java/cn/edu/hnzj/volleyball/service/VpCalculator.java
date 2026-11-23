@@ -93,8 +93,7 @@ public class VpCalculator {
     private Vp pickBest(Map<Long, Vp> stats, Long teamId) {
         List<Vp> candidates = new ArrayList<>();
         for (Vp stat : stats.values()) {
-            if (teamId != null && teamId.equals(stat.getTeamId())
-                    && stat.getPoints() != null && stat.getPoints() > 0) {
+            if (teamId != null && teamId.equals(stat.getTeamId())) {
                 candidates.add(stat);
             }
         }
