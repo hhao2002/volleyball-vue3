@@ -124,6 +124,20 @@ cd frontend && npm run build
 | `/api/admin` | 用户、申请、公告、登录日志、系统检测（仅管理员） |
 | `/ws/live?token=..&matchId=..` | 单场比赛实时比分推送 |
 
+## 常见问题
+
+- **IDEA 仍显示旧 SSM 模块**：旧 `.idea` 已被忽略。删除本地 `.idea` 目录后重新打开项目，或在 Maven 面板中重新导入根 `pom.xml`。
+- **端口占用**：后端默认 8080，前端默认 5173；如被占用请先停止旧进程，或修改 `application.yml` 与 `vite.config.js`。
+- **H2 与 MySQL 数据互不影响**：`demo` 档使用内存库，重启即重置；正式联调请用 MySQL。
+- **GitHub 推送网络**：本机 FlClash 系统代理为 `127.0.0.1:7890` 时，可执行：
+  ```bash
+  HTTPS_PROXY=http://127.0.0.1:7890 git push github main:main
+  ```
+  Gitee 已配置 SSH，可执行：
+  ```bash
+  git push git@gitee.com:huang-hao-hhao/volleyball3.0.git main:master
+  ```
+
 ## 仓库
 
 - Gitee：<https://gitee.com/huang-hao-hhao/volleyball3.0>
