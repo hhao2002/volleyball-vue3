@@ -9,7 +9,7 @@
 | --- | --- | --- | --- | --- |
 | A01 | 创建本地 git 仓库 | `git init`，main 分支，分阶段提交 | `git log` 可见多次提交 | ✅ |
 | A02 | 同步 gitee volleyball3.0 并合并 | `gitee/master` 拉取并以基线提交合并 | `git log` 保留远端历史 | ✅ |
-| A03 | 强制提交到 GitHub volleyball-vue3 | 配置 `github` 远端并推送 | 远端分支与提交记录 | ⏳ |
+| A03 | 强制提交到 GitHub volleyball-vue3 | 配置 `github` 远端，经 FlClash 代理强制覆盖 main | 远端 main 已更新为 3.0 提交 | ✅ |
 | A04 | 前端改为 Vue 项目 | `frontend/`：Vue 3 + Vite + Router + Pinia + Element Plus | `npm run build` 通过 | ✅ |
 | A05 | 数据库按需求修改 | 新库 `volleyball3`：用户/队伍/队员/比赛/局分/得分事件/公告/申请/登录日志/VP | `sql/volleyball3.sql` 导入成功 | ✅ |
 | A06 | 前后端分离与角色权限 | JWT + 拦截器，ADMIN/SCORER/USER 三级 | 后端测试 6 项权限/流程用例 | ✅ |
@@ -99,7 +99,7 @@
 | H04 | 双数据库验证 | H2 demo + MySQL 8 均启动成功 | 登录/公告接口 200 | ✅ |
 | H05 | 启动与使用文档 | `README.md` | 文档 | ✅ |
 | H06 | PingCode 需求清单 | 本文件 + `docs/pingcode-requirements.csv` | 文档 | ✅ |
-| H07 | git 提交与远端同步 | 分阶段提交，gitee + github | 待推送后复核 | ⏳ |
+| H07 | git 提交与远端同步 | 分阶段提交，gitee master + github main 均已推送 | 两端分支指向同一提交 | ✅ |
 
 ## 待确认的设计点
 
