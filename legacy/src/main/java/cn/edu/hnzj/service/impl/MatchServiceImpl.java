@@ -57,7 +57,6 @@ public class MatchServiceImpl implements MatchService {
 		// TODO Auto-generated method stub
 		System.out.println(memberService);
 		int[] members = matchDao.getMembersBymatchId(matchId);
-		System.out.println(Arrays.toString(members));
 		Map<Integer, Double> s = new HashMap<Integer, Double>();
 		for (int i = 0; i < members.length; i++) {
 			s.put(members[i], memberService.getScoreMatch(members[i], matchId));

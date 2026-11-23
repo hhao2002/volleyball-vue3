@@ -4,13 +4,14 @@
 1. 回忆复习MVC项目
 2. 修复一些bug
 3. 完善一些小细节
+4. 将前端JSP改为Vue
 
 [PingCode项目开发管理网址](https://iotc20220428104021552.pingcode.com/pjm/projects/VBC/backlog/g5LbaiMJ)
 
 ### 软件架构
-java-SSM框架
+java-SSM框架 + Vue
 
-SpringMVC Spring Mybatis
+SpringMVC Spring Mybatis Vue
 
 ## 安装教程(Win10)
 - 前置条件

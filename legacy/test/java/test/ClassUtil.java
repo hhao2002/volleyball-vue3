@@ -12,6 +12,7 @@ import java.util.jar.JarFile;
 
 import cn.minsin.core.tools.StringUtil;
 
+// 获取所以测试类的工具类
 public class ClassUtil {
 	public static List<Class<?>> getClassList(String packageName, boolean isRecursive) {
 		List<Class<?>> classList = new ArrayList<Class<?>>();

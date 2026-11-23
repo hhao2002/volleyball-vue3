@@ -19,7 +19,7 @@ public class Member {
 	 */
 	private int teamId;
 	/**
-	 * @Fields name : 队名
+	 * @Fields name : 名
 	 * @date: 2022-05-10 09:38:40
 	 */
 	private String name;
